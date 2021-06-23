@@ -27,4 +27,13 @@
 
     </insert>
 
+    <delete id="deleteBoard" parameterType="int">
+
+        delete
+        from t_board
+        where content_seq = #{id};
+
+    </delete>
+
+
 </mapper>

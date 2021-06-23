@@ -31,4 +31,9 @@ class BoardServiceTest {
         boardService.getAllBoardList()
                 .forEach(board -> log.info("board : {}", board));
     }
+
+    @Test
+    public void deleteBoard() {
+        boardService.deleteBoard(2);
+    }
 }

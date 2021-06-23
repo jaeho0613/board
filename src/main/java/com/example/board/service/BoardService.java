@@ -27,4 +27,8 @@ public class BoardService {
         boardMapper.insertBoard(board);
     }
 
+    public void deleteBoard(int id) {
+        boardMapper.deleteBoard(id);
+    }
+
 }
