@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.board.repository.BoardMapper">
+
+    <select id="selectBoardById" resultType="Board">
+
+        select *
+        from t_board
+        where content_seq = #{contentSeq}
+
+    </select>
+
+    <select id="selectAllBoardList" resultType="Board">
+
+        select *
+        from t_board
+
+    </select>
+
+    <insert id="insertBoard" parameterType="Board">
+
+        insert into t_board
+        values (#{contentSeq}, #{boardTypeCd}, #{title}, #{description})
+
+    </insert>
+
+</mapper>
