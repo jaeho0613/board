@@ -10,12 +10,45 @@
   <title>Document</title>
 
   <link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+
   <script src="/webjars/jquery/3.5.1/jquery.js"></script>
   <script src="/webjars/bootstrap/4.5.3/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="/css/custom.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
 
   <!-- Page JS -->
   <script>
+    $(document).ready(function () {
+      $("#exampleTable").DataTable({
+        "serverSide": true,
+        "processing": true,
+        "ajax": {
+          "url": "/api/get",
+          "type": "GET",
+          "data": function (res) {
+            console.log(res);
+            var data = res.data;
+            return data;
+          }
+        },
+        "columns": [{
+            "data": "seq"
+          },
+          {
+            "data": "name"
+          },
+          {
+            "data": "age"
+          },
+          {
+            "data": "date"
+          },
+        ]
+
+      });
+    });
+
     /**
      * modalOpenButtonEvent
      * 
@@ -60,7 +93,7 @@
     </button>
 
     <!-- Show Board Table -->
-    <table class="table table-hover">
+    <table id="example" class="table table-striped table-bordered">
       <thead>
         <tr>
           <th scope="col">No</th>
@@ -70,25 +103,6 @@
           <th>
         </tr>
       </thead>
-      <tbody>
-        <c:forEach items="${ boardList }" var="board" varStatus="st">
-          <tr>
-            <td>${ st.count }</td>
-            <td>${ board.boardTypeCd }</td>
-            <td>${ board.title }</td>
-            <td>${ board.description }</td>
-            <td>
-              <button type="button" class="btn btn-danger"
-                onclick="location.href='/main/delete/${ board.contentSeq }'">삭제
-              </button>
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
-                onclick="modalOpenButtonEvent(${ board.contentSeq })">
-                수정
-              </button>
-            </td>
-          </tr>
-        </c:forEach>
-      </tbody>
     </table>
 
     <!-- Modal -->
@@ -101,7 +115,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
           <!-- input form -->
           <form action="/main/addBoard" method="POST" id="boardData" enctype="multipart/form-data">
             <div class="modal-body">
@@ -127,11 +140,12 @@
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
-
         </div>
       </div>
     </div>
+    <!-- End Modal -->
   </main>
+  <!-- End Main -->
 </body>
 
 </html>

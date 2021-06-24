@@ -35,4 +35,7 @@ public class BoardService {
         boardMapper.updateBoard(board);
     }
 
+    public int getBoardCount() {
+        return boardMapper.selectAllBoardCount();
+    }
 }

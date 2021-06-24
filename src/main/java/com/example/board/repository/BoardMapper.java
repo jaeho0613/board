@@ -18,4 +18,6 @@ public interface BoardMapper {
 
     void updateBoard(Board board);
 
+    int selectAllBoardCount();
+
 }

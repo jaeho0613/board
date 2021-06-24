@@ -5,45 +5,50 @@
 
 <mapper namespace="com.example.board.repository.BoardMapper">
 
-    <select id="selectBoardById" resultType="Board">
+  <select id="selectBoardById" resultType="Board">
 
-        select *
-        from t_board
-        where content_seq = #{contentSeq}
+    select *
+    from t_board
+    where content_seq = #{contentSeq}
 
-    </select>
+  </select>
 
-    <select id="selectAllBoardList" resultType="Board">
+  <select id="selectAllBoardList" resultType="Board">
 
-        select *
-        from t_board
+    select *
+    from t_board
 
-    </select>
+  </select>
 
-    <insert id="insertBoard" parameterType="Board">
+  <insert id="insertBoard" parameterType="Board">
 
-        insert into t_board
-        values (#{contentSeq}, #{boardTypeCd}, #{title}, #{description})
+    insert into t_board
+    values (#{contentSeq}, #{boardTypeCd}, #{title}, #{description})
 
-    </insert>
+  </insert>
 
-    <delete id="deleteBoard" parameterType="int">
+  <delete id="deleteBoard" parameterType="int">
 
-        delete
-        from t_board
-        where content_seq = #{id};
+    delete
+    from t_board
+    where content_seq = #{id};
 
-    </delete>
+  </delete>
 
-    <update id="updateBoard" parameterType="Board">
+  <update id="updateBoard" parameterType="Board">
 
-        update t_board
-        set board_type_cd = #{boardTypeCd},
-            title = #{title},
-            description = #{description}
-        where content_seq = #{contentSeq}
+    update t_board
+    set board_type_cd = #{boardTypeCd},
+    title = #{title},
+    description = #{description}
+    where content_seq = #{contentSeq}
 
-    </update>
+  </update>
 
+  <select id="selectAllBoardCount" resultType="int">
 
+    select count(*)
+    from t_board;
+
+  </select>
 </mapper>

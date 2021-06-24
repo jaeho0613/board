@@ -47,4 +47,9 @@ class BoardServiceTest {
         );
     }
 
+    @Test
+    public void totalBoardCount() {
+        log.info("count : {}", boardService.getBoardCount());
+    }
+
 }

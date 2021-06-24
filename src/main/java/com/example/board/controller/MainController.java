@@ -20,12 +20,7 @@ public class MainController {
 
     @GetMapping("")
     public ModelAndView Main() {
-        ModelAndView mav = new ModelAndView("/jsp/index");
-        List<Board> boardList = boardService.getAllBoardList();
-
-        mav.addObject("boardList", boardList);
-
-        return mav;
+        return new ModelAndView("/jsp/index");
     }
 
     @PostMapping("/addBoard")
