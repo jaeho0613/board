@@ -11,6 +11,6 @@ public class VideoController {
 
     @GetMapping("")
     public ModelAndView main() {
-        return new ModelAndView("video");
+        return new ModelAndView("jsp/video");
     }
 }

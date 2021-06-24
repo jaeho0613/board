@@ -20,7 +20,7 @@ public class MainController {
 
     @GetMapping("")
     public ModelAndView Main() {
-        ModelAndView mav = new ModelAndView("index");
+        ModelAndView mav = new ModelAndView("/jsp/index");
         List<Board> boardList = boardService.getAllBoardList();
 
         mav.addObject("boardList", boardList);
@@ -30,10 +30,8 @@ public class MainController {
 
     @PostMapping("/addBoard")
     public ModelAndView addBoard(@ModelAttribute Board board) {
-
         log.info("Board : {}", board);
         boardService.addBoard(board);
-
         return new ModelAndView("redirect:/main");
     }
 
@@ -41,7 +39,13 @@ public class MainController {
     public ModelAndView deleteBoard(@PathVariable("contentSeq") int contentSeq) {
         log.info("contentSeq : {}", contentSeq);
         boardService.deleteBoard(contentSeq);
+        return new ModelAndView("redirect:/main");
+    }
 
+    @PostMapping("/modify/{contentSeq}")
+    public ModelAndView modifyBoard(@ModelAttribute Board board) {
+        log.info("Board : {}" , board);
+        boardService.updateBoard(board);
         return new ModelAndView("redirect:/main");
     }
 }

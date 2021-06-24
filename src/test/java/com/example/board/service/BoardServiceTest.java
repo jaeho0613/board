@@ -36,4 +36,15 @@ class BoardServiceTest {
     public void deleteBoard() {
         boardService.deleteBoard(2);
     }
+
+    @Test
+    public void updateBoard() {
+        boardService.updateBoard(new Board()
+                .setContentSeq(15)
+                .setBoardTypeCd("12")
+                .setTitle("서비스 수정 타이틀")
+                .setDescription("서비스 수정 내용")
+        );
+    }
+
 }

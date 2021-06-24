@@ -35,5 +35,15 @@
 
     </delete>
 
+    <update id="updateBoard" parameterType="Board">
+
+        update t_board
+        set board_type_cd = #{boardTypeCd},
+            title = #{title},
+            description = #{description}
+        where content_seq = #{contentSeq}
+
+    </update>
+
 
 </mapper>

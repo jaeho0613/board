@@ -13,10 +13,48 @@
   <script src="/webjars/jquery/3.5.1/jquery.js"></script>
   <script src="/webjars/bootstrap/4.5.3/js/bootstrap.js"></script>
 
+  <!-- Page JS -->
+  <script>
+    /**
+     * modalOpenButtonEvent
+     * 
+     * @Param {seq} 0 = 글 추가,
+     */
+    function modalOpenButtonEvent(seq) {
+      var $modal = $(".modal");
+
+      if (seq == 0) {
+        $modal.find("h5.modal-title").text("게시글 추가");
+        return;
+      }
+
+      $modal.find("h5.modal-title").text("게시글 수정");
+      $modal.find("form").attr("action","main/modify/" + seq);
+
+      $.ajax({
+        url: '/api/get/' + seq,
+        type: 'GET',
+        success: function (result) {
+          console.log(result);
+
+          $modal.find("input[name='title']").val(result.title);
+          $modal.find("textarea[name='description']").val(result.description);
+          if (result.boardTypeCd == '11') {
+            console.log("11입니다.");
+            $modal.find("select[name='boardTypeCd']").val('11').prop("selected", true);
+          } else {
+            console.log("12입니다.");
+            $modal.find("select[name='boardTypeCd']").val('12').prop("selected", true);
+          }
+        }
+      });
+    }
+  </script>
 </head>
 
 <body>
 
+  <!-- Navbar content -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">간단한 게시판</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -52,6 +90,7 @@
     </div>
   </nav>
 
+  <!-- Main list content -->
   <main class="container mt-5">
     <table class="table table-hover">
       <thead>
@@ -60,7 +99,7 @@
           <th scope="col">Board_Type_Cd</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
-          <th scope="col"> </th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -70,14 +109,23 @@
             <td>${ board.boardTypeCd }</td>
             <td>${ board.title }</td>
             <td>${ board.description }</td>
-            <td><button type="button" class="btn btn-danger" onclick="location.href='/main/delete/${ board.contentSeq }'">삭제</button></td>
+            <td>
+              <button type="button" class="btn btn-danger"
+                onclick="location.href='/main/delete/${ board.contentSeq }'">삭제
+              </button>
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
+                onclick="modalOpenButtonEvent(${ board.contentSeq })">
+                수정
+              </button>
+            </td>
           </tr>
         </c:forEach>
       </tbody>
     </table>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+      onclick="modalOpenButtonEvent(0)">
       글 추가
     </button>
 
@@ -86,27 +134,30 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">새로운 글</h5>
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
+          <!-- input form -->
           <form action="/main/addBoard" method="POST" id="boardData" enctype="multipart/form-data">
             <div class="modal-body">
               <div class="form-group">
                 <label>Title</label>
-                <input name="title" type="text" class="form-control" placeholder="제목">
+                <input name="title" type="text" class="form-control board_title" placeholder="제목">
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Board_Type_Cd</label>
-                <select name="boardTypeCd" class="form-control" id="exampleFormControlSelect1">
+                <select name="boardTypeCd" class="form-control board_type_cd" id="exampleFormControlSelect1">
                   <option>11</option>
                   <option>12</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
-                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용"></textarea>
+                <textarea name="description" class="form-control board_description" id="exampleFormControlTextarea1"
+                  rows="3" placeholder="내용"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -114,28 +165,11 @@
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
+
         </div>
       </div>
     </div>
   </main>
-
-  <script>
-    function submitform() {
-      var data = $("#boardData").serialize();
-
-      console.log("submit!!");
-      console.log(data);
-
-      $.ajax({
-        type : 'POST',
-        host : 'localhost:8088',
-        url : '/main/addBoard',
-        contentType : 'application/json',
-        data : data
-      })
-    }
-  </script>
-
 </body>
 
 </html>
