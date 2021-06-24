@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/webjars/bootstrap/4.5.3/css/bootstrap.css">
   <script src="/webjars/jquery/3.5.1/jquery.js"></script>
   <script src="/webjars/bootstrap/4.5.3/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="/css/custom.css">
 
   <!-- Page JS -->
   <script>
@@ -29,21 +30,17 @@
       }
 
       $modal.find("h5.modal-title").text("게시글 수정");
-      $modal.find("form").attr("action","main/modify/" + seq);
+      $modal.find("form").attr("action", "main/modify/" + seq);
 
       $.ajax({
         url: '/api/get/' + seq,
         type: 'GET',
         success: function (result) {
-          console.log(result);
-
           $modal.find("input[name='title']").val(result.title);
           $modal.find("textarea[name='description']").val(result.description);
           if (result.boardTypeCd == '11') {
-            console.log("11입니다.");
             $modal.find("select[name='boardTypeCd']").val('11').prop("selected", true);
           } else {
-            console.log("12입니다.");
             $modal.find("select[name='boardTypeCd']").val('12').prop("selected", true);
           }
         }
@@ -53,53 +50,24 @@
 </head>
 
 <body>
+  <!-- Main list content -->
+  <main class="container mt-3">
 
-  <!-- Navbar content -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">간단한 게시판</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
+      onclick="modalOpenButtonEvent(0)">
+      게시글 추가
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">링크</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            드롭다운
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">아무</a>
-            <a class="dropdown-item" href="#">것도</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">없다</a>
-          </div>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
-
-  <!-- Main list content -->
-  <main class="container mt-5">
+    <!-- Show Board Table -->
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Board_Type_Cd</th>
-          <th scope="col">Title</th>
-          <th scope="col">Description</th>
-          <th scope="col"></th>
+          <th scope="col">No</th>
+          <th scope="col">게시글 종류</th>
+          <th scope="col">제목</th>
+          <th scope="col">내용</th>
+          <th>
         </tr>
       </thead>
       <tbody>
@@ -123,12 +91,6 @@
       </tbody>
     </table>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-      onclick="modalOpenButtonEvent(0)">
-      글 추가
-    </button>
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -144,18 +106,18 @@
           <form action="/main/addBoard" method="POST" id="boardData" enctype="multipart/form-data">
             <div class="modal-body">
               <div class="form-group">
-                <label>Title</label>
+                <label>제목</label>
                 <input name="title" type="text" class="form-control board_title" placeholder="제목">
               </div>
               <div class="form-group">
-                <label for="exampleFormControlSelect1">Board_Type_Cd</label>
+                <label for="exampleFormControlSelect1">게시글 종류</label>
                 <select name="boardTypeCd" class="form-control board_type_cd" id="exampleFormControlSelect1">
                   <option>11</option>
                   <option>12</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Description</label>
+                <label for="exampleFormControlTextarea1">내용</label>
                 <textarea name="description" class="form-control board_description" id="exampleFormControlTextarea1"
                   rows="3" placeholder="내용"></textarea>
               </div>
