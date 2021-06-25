@@ -3,21 +3,17 @@ package com.example.board.model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
-
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
-public class Board {
+public class File {
 
-    Integer contentSeq;
-    String boardTypeCd;
-    String title;
-    String description;
-    Date createDate;
     Integer fileSeq;
+    String fileName;
+    String fileDownloadUrl;
+    Integer size;
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApiController {
 
+    // TODO : 자동완성
     final BoardService boardService;
 
     @GetMapping("/get/{seq}")

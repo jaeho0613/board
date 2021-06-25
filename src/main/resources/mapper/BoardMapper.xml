@@ -23,7 +23,7 @@
   <insert id="insertBoard" parameterType="Board">
 
     insert into t_board
-    values (#{contentSeq}, #{boardTypeCd}, #{title}, #{description})
+    values (#{contentSeq}, #{boardTypeCd}, #{title}, #{description}, now(), 1)
 
   </insert>
 

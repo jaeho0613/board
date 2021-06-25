@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html;" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,6 +102,7 @@
           <th scope="col">게시글 종류</th>
           <th scope="col">제목</th>
           <th scope="col">내용</th>
+          <th scope="col">작성일</th>
           <th></th>
         </tr>
       </thead>
@@ -112,11 +114,14 @@
             <th>${board.title}</th>
             <th>${board.description}</th>
             <th>
+              <fmt:formatDate value="${board.createDate}" pattern="MM/dd" />
+            </th>
+            <th>
               <button type="button" class="btn btn-danger"
-                      onclick="location.href='/main/delete/${ board.contentSeq }'">삭제
+                onclick="location.href='/main/delete/${ board.contentSeq }'">삭제
               </button>
               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
-                      onclick="modalOpenButtonEvent(${ board.contentSeq })">
+                onclick="modalOpenButtonEvent(${ board.contentSeq })">
                 수정
               </button>
             </th>
@@ -154,6 +159,13 @@
                 <textarea name="description" class="form-control board_description" id="exampleFormControlTextarea1"
                   rows="3" placeholder="내용"></textarea>
               </div>
+              <div class="form-group">
+                <label for="inputFile">첨부 파일</label>
+                <div class="custom-file" id="inputFile">
+                  <input name="file" type="file" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">파일을 선택해 주세요.</label>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -166,9 +178,11 @@
     <!-- End Modal -->
     <nav aria-label="Page navigation example" class="d-flex justify-content-center">
       <ul class="pagination">
-        <c:forEach begin="1" end="${paging.totalPagingRow}" varStatus="status">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <c:forEach begin="${paging.startIndex}" end="${paging.totalPagingRow}" varStatus="status">
           <li class="page-item"><a class="page-link" href="?page=${status.index}">${status.index}</a></li>
         </c:forEach>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
   </main>
