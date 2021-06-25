@@ -51,4 +51,11 @@
     from t_board;
 
   </select>
+
+  <select id="selectPagingBoardList" resultType="Board" parameterType="int">
+    select *
+    from t_board
+    order by content_seq desc
+    limit #{startIndex}, #{endIndex};
+  </select>
 </mapper>

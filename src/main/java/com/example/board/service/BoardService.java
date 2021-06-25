@@ -38,4 +38,8 @@ public class BoardService {
     public int getBoardCount() {
         return boardMapper.selectAllBoardCount();
     }
+
+    public List<Board> pagingBoardList(int startIndex, int endIndex) {
+        return boardMapper.selectPagingBoardList(startIndex, endIndex);
+    }
 }

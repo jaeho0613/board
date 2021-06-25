@@ -20,4 +20,6 @@ public interface BoardMapper {
 
     int selectAllBoardCount();
 
+    List<Board> selectPagingBoardList(int startIndex, int endIndex);
+
 }

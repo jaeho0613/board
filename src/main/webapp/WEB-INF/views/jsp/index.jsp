@@ -55,9 +55,9 @@
      * @Param {seq} 0 = 글 추가,
      */
     function modalOpenButtonEvent(seq) {
-      var $modal = $(".modal");
+      let $modal = $(".modal");
 
-      if (seq == 0) {
+      if (seq === 0) {
         $modal.find("h5.modal-title").text("게시글 추가");
         return;
       }
@@ -69,6 +69,7 @@
         url: '/api/get/' + seq,
         type: 'GET',
         success: function (result) {
+          console.log(result);
           $modal.find("input[name='title']").val(result.title);
           $modal.find("textarea[name='description']").val(result.description);
           if (result.boardTypeCd == '11') {
@@ -100,9 +101,28 @@
           <th scope="col">게시글 종류</th>
           <th scope="col">제목</th>
           <th scope="col">내용</th>
-          <th>
+          <th></th>
         </tr>
       </thead>
+      <tbody>
+        <c:forEach items="${boardList}" var="board" varStatus="status">
+          <tr>
+            <th>${board.contentSeq}</th>
+            <th>${board.boardTypeCd}</th>
+            <th>${board.title}</th>
+            <th>${board.description}</th>
+            <th>
+              <button type="button" class="btn btn-danger"
+                      onclick="location.href='/main/delete/${ board.contentSeq }'">삭제
+              </button>
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"
+                      onclick="modalOpenButtonEvent(${ board.contentSeq })">
+                수정
+              </button>
+            </th>
+          </tr>
+        </c:forEach>
+      </tbody>
     </table>
 
     <!-- Modal -->
@@ -144,6 +164,13 @@
       </div>
     </div>
     <!-- End Modal -->
+    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+      <ul class="pagination">
+        <c:forEach begin="1" end="${paging.totalPagingRow}" varStatus="status">
+          <li class="page-item"><a class="page-link" href="?page=${status.index}">${status.index}</a></li>
+        </c:forEach>
+      </ul>
+    </nav>
   </main>
   <!-- End Main -->
 </body>

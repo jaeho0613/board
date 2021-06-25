@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Board {
 
-    int contentSeq;
+    Integer contentSeq;
     String boardTypeCd;
     String title;
     String description;

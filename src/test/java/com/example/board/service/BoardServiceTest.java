@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @Slf4j
 @SpringBootTest
 class BoardServiceTest {
@@ -52,4 +54,9 @@ class BoardServiceTest {
         log.info("count : {}", boardService.getBoardCount());
     }
 
+    @Test
+    public void pagingBoardList() {
+        List<Board> boardList = boardService.pagingBoardList(0, 10);
+        boardList.forEach(board -> log.info("board:  {}", board));
+    }
 }
